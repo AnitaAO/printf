@@ -16,7 +16,7 @@ int print_unsigned(va_list types, char buffer[], int flags, int width, int preci
 {
 	int j = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
-	num = convert_size_unsigned(num, size);
+	num = convert_size_unsgnd(num, size);
 	if (num == 0)
 		buffer[j--] = '0';
 	buffer[BUFF_SIZE - 1] = '\0';
@@ -26,7 +26,7 @@ int print_unsigned(va_list types, char buffer[], int flags, int width, int preci
 		num /= 10;
 	}
 	j++;
-	return (write_unsigned(0, j, buffer, flags, width, precision, size));
+	return (write_unsgnd(0, j, buffer, flags, width, precision, size));
 }
 
 /**
@@ -41,7 +41,7 @@ int print_unsigned(va_list types, char buffer[], int flags, int width, int preci
  * Return: number of chars to be printed
  */
 
-int print_octal(va_list types, char buffer[], int flags, int width, int6 precision, int size)
+int print_octal(va_list types, char buffer[], int flags, int width, int precision, int size)
 {
 	int j = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
@@ -49,22 +49,22 @@ int print_octal(va_list types, char buffer[], int flags, int width, int6 precisi
 	UNUSED(width);
 	num = convert_size_unsgnd(num, size);
 	if (num == 0)
-		buffer[i--] = '0';
+		buffer[j--] = '0';
 
 	buffer[BUFF_SIZE - 1] = '\0';
 
 	while (num > 0)
 	{
-		buffer[i--] = (num % 8) + '0';
+		buffer[j--] = (num % 8) + '0';
 		num /= 8;
 	}
 
 	if (flags & F_HASH && init_num != 0)
-		buffer[i--] = '0';
+		buffer[j--] = '0';
 
-	i++;
+	j++;
 
-	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
+	return (write_unsgnd(0, j, buffer, flags, width, precision, size));
 }
 
 /************** PRINT UNSIGNED NUMBER IN HEXADECIMAL **************/
